@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secret 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Poppins',sans-serif;
+    height:100vh;
+    overflow:hidden;
+    background:linear-gradient(135deg,#ffd1dc,#ff6f91);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}
+
+/* LOCK SCREEN */
+.lock{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:linear-gradient(135deg,#ff9a9e,#fecfef);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    z-index:20;
+}
+
+.lock h2{
+    font-family:'Dancing Script',cursive;
+    font-size:35px;
+    margin-bottom:20px;
+}
+
+.lock input{
+    padding:10px;
+    border-radius:20px;
+    border:none;
+    outline:none;
+    text-align:center;
+}
+
+.lock button{
+    margin-top:10px;
+    padding:10px 20px;
+    border:none;
+    border-radius:20px;
+    background:#ff4b5c;
+    color:white;
+    cursor:pointer;
+}
+
+/* MAIN */
+.container{display:none;max-width:500px;padding:20px;z-index:2;}
+
+.bear{font-size:60px;animation:bounce 1.5s infinite;}
+@keyframes bounce{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-15px);}
+}
+
+.photo{
+    width:150px;height:150px;border-radius:50%;
+    margin:15px auto;
+    background:url('love.jpeg') center/cover;
+    border:4px solid white;
+    box-shadow:0 0 15px rgba(0,0,0,0.2);
+}
+
+h1{
+    font-family:'Dancing Script',cursive;
+    font-size:38px;
+    margin:10px 0;
+}
+
+.subtitle{font-style:italic;margin-bottom:10px;}
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    margin-top:20px;
+}
+
+.yes{
+    background:linear-gradient(45deg,#ff4b5c,#ff1e56);
+    color:white;
+    padding:15px 40px;
+    border-radius:50px;
+    font-size:18px;
+    border:none;
+    box-shadow:0 0 10px rgba(255,0,80,0.6);
+}
+
+.yes:hover{
+    transform:scale(1.1);
+    box-shadow:0 0 25px rgba(255,0,80,1);
+}
+
+.no{
+    background:white;
+    border:2px solid red;
+    padding:10px 25px;
+    border-radius:50px;
+}
+
+/* Hearts */
+.heart{
+    position:fixed;
+    bottom:-50px;
+    animation:floatUp linear infinite;
+}
+@keyframes floatUp{
+    0%{opacity:0;}
+    20%{opacity:1;}
+    100%{transform:translateY(-110vh);opacity:0;}
+}
+
+/* Celebration */
+.celebration{
+    display:none;
+    position:fixed;
+    width:100%;height:100%;
+    top:0;left:0;
+    background:linear-gradient(135deg,#ffb6c1,#ff69b4);
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.celebration h2{
+    font-size:50px;
+    animation:pulse 1s infinite;
+}
+@keyframes pulse{
+    50%{transform:scale(1.2);}
+}
+
+/* Confetti */
+.confetti{
+    position:fixed;
+    width:8px;height:8px;
+    top:-10px;
+    animation:fall linear forwards;
+}
+@keyframes fall{
+    to{transform:translateY(110vh) rotate(720deg);}
+}
+
+.footer{margin-top:20px;font-size:13px;}
+
+</style>
+</head>
+
+<body>
+
+<!-- LOCK SCREEN -->
+<div class="lock" id="lock">
+    <h2>Enter Password 💌</h2>
+    <input type="password" id="pass" placeholder="Enter secret...">
+    <button onclick="unlock()">Unlock</button>
+    <p id="error" style="color:red;margin-top:10px;"></p>
+</div>
+
+<!-- MAIN -->
+<div class="container" id="main">
+    <div class="bear">🐻</div>
+    <div class="photo"></div>
+
+    <h1>Will You Be My Wife, Akki?</h1>
+    <div class="subtitle">I've been gathering courage to ask you this...</div>
+
+    <div class="buttons">
+        <button class="yes" onclick="sayYes()">Yes ❤️</button>
+        <button class="no" id="noBtn">No</button>
+    </div>
+
+    <div class="footer">
+        Every love story is beautiful, but ours is my favourite
+    </div>
+</div>
+
+<!-- Celebration -->
+<div class="celebration" id="celebration">
+    <h2>Yayyyy!! 🎉</h2>
+    <p>I knew you'd say yes...</p>
+</div>
+
+<script>
+
+/* PASSWORD */
+const correctPassword = "290509"; // change this
+
+function unlock(){
+    let input = document.getElementById("pass").value;
+    if(input === correctPassword){
+        document.getElementById("lock").style.display="none";
+        document.getElementById("main").style.display="block";
+        startHearts();
+    } else {
+        document.getElementById("error").innerText="Wrong password 😢";
+    }
+}
+
+/* HEARTS */
+let heartInterval;
+function startHearts(){
+    heartInterval=setInterval(()=>{
+        let h=document.createElement("div");
+        h.className="heart";
+        h.innerText="💖";
+        h.style.left=Math.random()*100+"vw";
+        h.style.fontSize=(15+Math.random()*25)+"px";
+        h.style.animationDuration=(4+Math.random()*4)+"s";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),8000);
+    },300);
+}
+
+/* SMART NO BUTTON */
+const noBtn = document.getElementById("noBtn");
+
+const messages = [
+    "Nope 😜",
+    "Try again 😂",
+    "You sure? 🤨",
+    "Not happening 😏",
+    "Think again 💭"
+];
+
+let msgIndex = 0;
+
+function moveNoButton() {
+    const yesBtn = document.querySelector(".yes").getBoundingClientRect();
+
+    let x, y;
+
+    do {
+        x = Math.random() * (window.innerWidth - 120);
+        y = Math.random() * (window.innerHeight - 60);
+    } while (
+        x > yesBtn.left - 120 &&
+        x < yesBtn.right + 120 &&
+        y > yesBtn.top - 80 &&
+        y < yesBtn.bottom + 80
+    );
+
+    noBtn.style.position = "fixed";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    noBtn.innerText = messages[msgIndex];
+    msgIndex = (msgIndex + 1) % messages.length;
+}
+
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("click", moveNoButton);
+noBtn.addEventListener("touchstart", moveNoButton);
+
+/* YES CLICK */
+function sayYes(){
+    document.getElementById("main").style.display="none";
+    document.getElementById("celebration").style.display="flex";
+
+    clearInterval(heartInterval);
+    document.querySelectorAll(".heart").forEach(h=>h.remove());
+
+    for(let i=0;i<120;i++){
+        let c=document.createElement("div");
+        c.className="confetti";
+        c.style.left=Math.random()*100+"vw";
+        c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+        c.style.animationDuration=(2+Math.random()*3)+"s";
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),5000);
+    }
+}
+</script>
+
+</body>
+</html>
